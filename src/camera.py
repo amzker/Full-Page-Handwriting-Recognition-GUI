@@ -1,6 +1,5 @@
 from autocorrect import Speller
 spell = Speller()
-from image_slicer import slice
 import cv2
 import tkinter as tk
 from tkinter import *
