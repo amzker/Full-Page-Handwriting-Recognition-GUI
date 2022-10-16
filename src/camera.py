@@ -47,7 +47,7 @@ def infer(model: Model, fn_img: Path) -> None:
     img = preprocessor.process_img(img)
     batch = Batch([img], None, 1)
     recognized, probability = model.infer_batch(batch, True)
-        #os.system("echo "+recognized+probability+">>logs.txt")
+    #os.system("echo "+recognized+probability+">>logs.txt")
     print(f'Recognized: "{recognized[0]}"')
     print(f'Probability: {probability[0]}')
     return recognized[0]
@@ -58,17 +58,15 @@ def char_list_from_file() -> List[str]:
     
 model = Model(char_list_from_file(),2, must_restore=True, dump=False)
 
-# Defining CreateWidgets() function to create necessary tkinter widgets
 def createwidgets():
-    root.feedlabel = Label(root, bg="steelblue", fg="white", text="WEBCAM FEED", font=('Comic Sans MS',20))
+    root.feedlabel = Label(root, bg="steelblue", fg="white", text="WEBCAM", font=('Comic Sans MS',20))
     root.feedlabel.grid(row=1, column=1, padx=10, pady=10, columnspan=2)
-
     root.cameraLabel = Label(root, bg="steelblue", borderwidth=3, relief="groove")
     root.cameraLabel.grid(row=2, column=1, padx=10, pady=10, columnspan=2)
     root.textLabel = Entry(root, borderwidth=2,width=100 ,relief="groove", textvariable=translated)
-    root.textLabel.grid(row=5, column=1, padx=10, pady=10, columnspan=1)
+    root.textLabel.grid(row=6, column=1, padx=10, pady=10, columnspan=1)
     root.uptextLabel = Entry(root, borderwidth=2,width=100 ,relief="groove", textvariable=uptranslated)
-    root.uptextLabel.grid(row=6, column=1, padx=10, pady=10, columnspan=1)
+    root.uptextLabel.grid(row=7, column=1, padx=10, pady=10, columnspan=1)
     root.trbtn = Button(root, text="Get Translation", command=translate, bg="LIGHTBLUE", font=('Comic Sans MS',15), width=13)
     root.trbtn.grid(row=5, column=4)
 
@@ -80,7 +78,10 @@ def createwidgets():
 
     root.captureBTN = Button(root, text="CAPTURE", command=Capture, bg="LIGHTBLUE", font=('Comic Sans MS',15), width=20)
     root.captureBTN.grid(row=4, column=1, padx=10, pady=10)
-
+    
+    root.CamNum = Entry(root,textvariable=Camvar)
+    root.CamNum.grid(row=5,column=1,padx=10,pady=10)
+    
     root.CAMBTN = Button(root, text="STOP CAMERA", command=StopCAM, bg="LIGHTBLUE", font=('Comic Sans MS',15), width=13)
     root.CAMBTN.grid(row=4, column=2)
     
@@ -203,6 +204,7 @@ def Capture():
 
     # Keeping a reference
     root.imageLabel.photo = saved_image
+    imagePath.set(imgName)
 
     # Displaying messagebox
     if success :
@@ -223,7 +225,11 @@ def StopCAM():
 
 def StartCAM():
     # Creating object of class VideoCapture with webcam index
-    root.cap = cv2.VideoCapture(0)
+    if Camvar.get().isnumeric():
+        root.cap = cv2.VideoCapture(int(Camvar.get()))
+    else:
+        root.cap = cv2.VideoCapture(Camvar.get())
+                                    
 
     # Setting width and height
     width_1, height_1 = 640, 480
@@ -285,7 +291,7 @@ root.cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 root.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
 # Setting the title, window size, background color and disabling the resizing property
-root.title("Pycam")
+root.title("Hnadwriting CamApp")
 root.geometry("1200x700")
 root.resizable(True, True)
 
@@ -295,12 +301,14 @@ imagePath = StringVar()
 translated = StringVar()
 uptranslated = StringVar()
 rawno = StringVar()
-rawno.set("25")
+Camvar = StringVar()
+Camvar.set(0)
+
+rawno.set("10")
 createwidgets()
 root.mainloop()
 
 
-# In[ ]:
 
 
 
