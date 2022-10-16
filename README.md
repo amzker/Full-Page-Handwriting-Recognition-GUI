@@ -14,7 +14,7 @@ git clone https://github.com/amzker/Full-Page-Handwriting-Recognition-GUI.git
 cd Full-Page-Handwriting-Recognition-GUI
 pip3 install -r requirments.txt
 ```
-NOTE: Model is Already added here in ./model dir.
+
 ```
 model is trained on line by line method because my pc can't handle to train on full page also google colab wasn't 
 usefull much,so we will be cutting image into lines and providing it into model. 
