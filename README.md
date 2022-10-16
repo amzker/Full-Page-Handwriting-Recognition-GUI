@@ -34,6 +34,7 @@ inaccuracy may arise if cutted line have chipped charectors
       1 = webcam url or number like 0 [default is 0].
       2 = Here is where your translated text will come 
       3 = Row no means in how many rows you want to divide your page to give full page input as line by line to model. use 1 for full page (if full page have only 1 line)
+      4 = Button if pressed it shows from where image is going to get cut based on row no 
 ```
 3. in 1 add your desired camera number or ip (as given in screenshot)
 4. hit stop camera and start camera again to load your input camera

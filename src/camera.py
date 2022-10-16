@@ -97,6 +97,9 @@ def createwidgets():
     
     root.RawNumEntry = Entry(root, width=10, textvariable=rawno)
     root.RawNumEntry.grid(row=4, column=4, padx=10, pady=10)
+    
+    root.RowSowBTN = Button(root, text="Show Rows", command=ShowRow)
+    root.RowSowBTN.grid(row=4, column=5)
 
     root.openImageButton = Button(root, width=10, text="BROWSE", command=imageBrowse)
     root.openImageButton.grid(row=3, column=5, padx=10, pady=10)
@@ -245,7 +248,21 @@ def StartCAM():
     # Calling the ShowFeed() Function
     ShowFeed()
     
-    
+def ShowRow():
+    rows = int(rawno.get())
+    image = cv2.imread(imagePath.get())
+    height, width = image.shape[1], image.shape[0]
+    PerRow = int(height/rows)
+    for i in range(0,height,PerRow):
+        image = cv2.line(image, (0,i), (width,i), (0, 255, 0),1)
+    cv2.imwrite("rowed.jpg", image)
+    image = Image.open("rowed.jpg")
+    image = image.resize((640, 480), Image.ANTIALIAS)
+    image = ImageTk.PhotoImage(image)
+    root.imageLabel.config(image=image)
+    root.imageLabel.photo = image
+
+
 def translate():
     if imagePath.get() != '':
         if rawno.get() != '':
