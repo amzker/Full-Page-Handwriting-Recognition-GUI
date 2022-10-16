@@ -261,8 +261,41 @@ def ShowRow():
     image = ImageTk.PhotoImage(image)
     root.imageLabel.config(image=image)
     root.imageLabel.photo = image
+    
+
+def translate():
+    if imagePath.get() != '':
+        if rawno.get() != '':
+            imPath = imagePath.get()
+            rows = int(rawno.get())
+            if rows != 1:
+                image = cv2.imread(imagePath.get())
+                height, width = image.shape[1], image.shape[0]
+                PerRow = int(height/rows)
+                output = []
+                beautyfied = []
+                for i in range(0,height,PerRow):
+                    image = image[i:i+PerRow]  #y1,y2 <- somewhere mistake in logic here but i think it should work
+                    cv2.imwrite("image.jpg",image)
+                    data = infer(model,"image.jpg")
+                    bbt = spell(data) 
+                    output.append(data)
+                    beautyfied.append(bbt)
+                print(output)
+                translated.set(output)
+                uptranslated.set(beautyfied)
+            else:
+                tr = infer(model, imPath)
+                translated.set(tr)
+                text = spell(tr).replace("{","\n").replace("}","")
+                uptranslated.set(text)
+        else:
+            messagebox.showerror("ERROR", "NO ROW NO DEFINED!!")
+    else:
+        messagebox.showerror("ERROR", "NO DIRECTORY SELECTED TO STORE IMAGE!!")
 
 
+"""
 def translate():
     if imagePath.get() != '':
         if rawno.get() != '':
@@ -280,7 +313,7 @@ def translate():
                     bbt = spell(data) 
                     output.append(data)
                     beautyfied.append(bbt)
-                    os.remove(fi)
+                    #os.remove(fi)
                 print(output)
                 translated.set(output)
                 uptranslated.set(beautyfied)
@@ -293,9 +326,8 @@ def translate():
             messagebox.showerror("ERROR", "NO ROW NO DEFINED!!")
     else:
         messagebox.showerror("ERROR", "NO DIRECTORY SELECTED TO STORE IMAGE!!")
-
     
-    
+ """  
 # Creating object of tk class
 root = tk.Tk()
 
