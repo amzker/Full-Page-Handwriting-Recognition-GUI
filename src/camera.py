@@ -275,8 +275,8 @@ def translate():
                 output = []
                 beautyfied = []
                 for i in range(0,height,PerRow):
-                    image = image[i:i+PerRow]  #y1,y2 <- somewhere mistake in logic here but i think it should work
-                    cv2.imwrite("image.jpg",image)
+                    imageC = image[i:i+PerRow] #y1,y2 <- somewhere mistake in logic here but i think it should work
+                    cv2.imwrite("image.jpg", imageC)
                     data = infer(model,"image.jpg")
                     bbt = spell(data) 
                     output.append(data)
