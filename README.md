@@ -12,7 +12,7 @@ Model Trained Via: https://github.com/githubharald/SimpleHTR
 ```
 git clone https://github.com/amzker/Full-Page-Handwriting-Recognition-GUI.git
 cd Full-Page-Handwriting-Recognition-GUI/
-pip3 install -r requirments.txt
+pip3 install -r requirements.txt
 cd model/
 wget https://github.com/amzker/Full-Page-Handwriting-Recognition-GUI/releases/download/model/model.zip
 unzip model.zip 
